@@ -23,7 +23,7 @@ USER node
 RUN yarn lerna run build
 
 
-FROM node:20-alpine as nodejsbuild
+FROM node:22-alpine as nodejsbuild
 
 RUN corepack enable
 
@@ -37,7 +37,10 @@ RUN rm -rf ./node_modules/typescript
 
 
 
-FROM nikolaik/python-nodejs:python3.12-nodejs20-alpine as final
+FROM node:22-alpine as final
+
+# Install Python and other build dependencies
+RUN apk add --no-cache python3 py3-pip build-base
 
 RUN corepack enable
 
