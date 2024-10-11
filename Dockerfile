@@ -40,7 +40,7 @@ RUN rm -rf ./node_modules/typescript
 FROM node:22-alpine as final
 
 # Install Python and other build dependencies
-RUN apk add --no-cache python3 py3-pip build-base
+RUN apk add --no-cache python3 py3-pip build-base pipx
 
 RUN corepack enable
 
@@ -67,7 +67,7 @@ WORKDIR /usr/src/app
 COPY --from=nodejsbuild /usr/src/express-server/build /usr/src/app
 COPY --from=nodejsbuild /usr/src/express-server/node_modules /usr/src/app/node_modules
 
-RUN pip install -r /usr/src/app/importer/requirements.txt
+RUN pipx install -r /usr/src/app/importer/requirements.txt
 
 ENV EXPRESS_REACT_BUILD_PATH /usr/src/web/
 
